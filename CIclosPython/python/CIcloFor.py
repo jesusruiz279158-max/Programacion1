@@ -1,6 +1,6 @@
-for hora in range(0,24):
-    for minuto in range (0,60):
-        for segundo in range (0,60):
+for hora in range(12):
+    for minuto in range (60):
+        for segundo in range (60):
             if hora < 10 and minuto < 10 and segundo < 10:
                 print (f"0{hora}:0{minuto}:0{segundo}")
             elif hora < 10 and minuto < 10:
