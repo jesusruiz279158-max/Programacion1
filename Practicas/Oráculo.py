@@ -42,6 +42,7 @@ def iniciar_oraculo():
         opcion = input("¿Deseas conocer tu destino?  (si/no) ").lower()
 
         if opcion == 'si':
+            
             calcular_elemento()
             generar_prediccion()
         
