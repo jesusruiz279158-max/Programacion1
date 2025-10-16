@@ -25,13 +25,14 @@ def simular_bola_magica():
     while True:
         pregunta = input(("Ingrese una pregunta. Si desea salir escribe 'salir'.")).lower()
        
+        if pregunta == 'salir':
+            print("Siempre sera bienvenido...")
+            break
+
         if not pregunta.strip():
             continue
         respuesta_elegida = random.choice(opciones)
         print(f"\nLa Bola Mágica dice: {respuesta_elegida}\n")
-        
-        if pregunta == 'salir':
-            print("Siempre sera bienvenido...")
-            break
+
 
 simular_bola_magica()
