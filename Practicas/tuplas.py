@@ -9,11 +9,12 @@ inventario = {
 }
 
 print("============ ¡Bienvenido a Game Stop!============")
-print(f"\nEl precio del segundo juego es: {inventario['minecraft']['precio']}\n")
+#print(f"\nEl precio del segundo juego es: {inventario['minecraft']['precio']}\n")
 
 print("Los juegos en existencia son: \n")
+
 for juegos in inventario:
-    print(f"{juegos}    ${inventario[juegos]['precio']}  Unidades disponibles: {inventario[juegos]['stock']}".capitalize())
+    print(f"{juegos}    ${inventario[juegos]['precio']}  Unidades: {inventario[juegos]['stock']}".capitalize())
 
 while True:
     
@@ -21,11 +22,16 @@ while True:
 
     if opcion == 'si':
         juegoC = input("Ingrese el nombre del juego que desee comprar: \n").lower()
+
         if juegoC in inventario:
+            print("==========================================")
             print(f"Usted ha comprado el juego '{juegoC}.'")
             inventario[juegoC]["stock"] -= 1
-            print(f"El stock del juego '{juegoC}' ahora es: {inventario[juegoC]['stock']}")
+            print(f"Las copias disponibles de '{juegoC}' ahora son: {inventario[juegoC]['stock']}")
+            print("==========================================")
     
-    if opcion == 'no':
+    elif opcion == 'no':
         print("Siempre será bienvenido..")
         break
+    else:
+        print("Por favor ingrese una respuesta válida..")
