@@ -3,7 +3,7 @@ from tkinter import font, filedialog, messagebox
 from config import TITULO,COLOR_BARRA_SUPERIOR,COLOR_MENU_LATERAL,COLOR_PANEL_PRINCIPAL
 from util.util_ventana import centrar_ventana
 from util.util_imagenes import leer_imagen
-import pygame
+#import pygame
 import os
 
 def bind_hover_events(button):
@@ -41,7 +41,7 @@ def mostrar_productos():
     label_imagen_principal = tk.Label(panel_principal, text = "Productos")
     label_imagen_principal.pack()
     
-def mostrar_preportes():
+def mostrar_reportes():
     limpiar_panel(panel_principal)
     label_imagen_principal = tk.Label(panel_principal, text = "Reportes")
     label_imagen_principal.pack()
@@ -52,37 +52,39 @@ def mostrar_ususarios():
     label_imagen_principal.pack()
 
 def cargar_cancion():
-    ruta = filedialog.askopenfile(title="Elige un mp3"
+    global ruta
+    ruta = filedialog.askopenfilename(title="Elige un mp3"
                                   , filetypes=[("Archivos MP3", ".mp3")])
     if ruta:
-        return (ruta, os.path.basename(ruta))
+        global nombre_archivo
+        nombre_archivo = os.path.basename(ruta)
     
-def reproducir(ruta, estado):
-    if ruta:
-        try:
-            if estado == "pause":
+#def reproducir(ruta, estado):
+    #if ruta:
+        #try:
+            #if estado == "pause":
                 #Si estaba pausado, le quita el pause
-                pygame.mixer.music.unpause()
-                estado = "play"
-            else:
-                pygame.mixer.music.load(ruta)
-                pygame.mixer.music.play()
-        except Exception as e:
-            messagebox.showerror("Error", f"No se pudo reproducir el archivo {e}")
-    else:
-        messagebox.showwarning("Atención", "Primero debes cargar una canción")
+                #pygame.mixer.music.unpause()
+                #estado = "play"
+            #else:
+                #pygame.mixer.music.load(ruta)
+                #pygame.mixer.music.play()
+        #except Exception as e:
+            #messagebox.showerror("Error", f"No se pudo reproducir el archivo {e}")
+    #else:
+        #messagebox.showwarning("Atención", "Primero debes cargar una canción")
 
 def pausar():
-    pygame.mixer.music.pause
+    #pygame.mixer.music.pause
     return "pause"
 
 def detener():
-    pygame.mixer.music.stop()
+    #pygame.mixer.music.stop()
     return "stop"
 
-def cambiar_volumen(valor):
+#def cambiar_volumen(valor):
     #El volumen va de 0 a 1
-    pygame.mixer.music.set_volume(float((valor/100)))
+    #pygame.mixer.music.set_volume(float((valor/100)))
 
 root = tk.Tk()
 root.title(TITULO)
@@ -106,7 +108,7 @@ panel_principal.pack(side=tk.RIGHT ,fill="both",expand=True)
 #fuentes_disponibles = list(font.families())
 #fa_fonts = [f for f in fuentes_disponibles if "Awesome" in f]
 #print(fa_fonts)
-fontawesome = font.Font(family="Font Awesome 7 Free",size=20)
+fontawesome = font.Font(family="Font Awesome 7 Free",size=18)
 
 btn_menu= tk.Button(barra_superior, text="\uf0c9",
             font=fontawesome,
@@ -124,6 +126,15 @@ label = tk.Label(barra_superior,text="Programacion I"
                  )
 label.pack(padx=10,pady=10,side=tk.LEFT)
 
+label_musica = tk.Label(barra_superior, text = "<Archivo no seleccionado>", font="Roboto 16",
+                        bg = COLOR_BARRA_SUPERIOR, fg = "#f2f2f2")
+
+btn_open = tk.Button(barra_superior, text="\uf07c",
+            font=fontawesome,
+            bg=COLOR_BARRA_SUPERIOR,
+            fg="#f2f2f2",
+            bd=0
+)
 
 btn_stop= tk.Button(barra_superior, text="\uf04d",
             font=fontawesome,
@@ -150,11 +161,21 @@ btn_pause= tk.Button(barra_superior, text="\uf04c",
 volumen = tk.Scale(barra_superior, from_=0, to=100
                    , bg=COLOR_BARRA_SUPERIOR
                    ,fg="#f2f2f2", bd=0,border=0
-                   , resolution=1,orient="horizontal")
+                   , resolution=1,orient="horizontal"
+                   ,length=200, troughcolor="#95a5a6"
+                   ,activebackground="#0099CC"
+                   ,sliderrelief="flat", relief="flat" \
+                   ,highlightthickness=0
+                   )
+
+volumen.set(50)
+
 volumen.pack(padx=4,pady=10, side=tk.RIGHT)
 btn_pause.pack(padx=4,pady=10,side=tk.RIGHT)
 btn_play.pack(padx=4,pady=10,side=tk.RIGHT)
 btn_stop.pack(padx=4,pady=10,side=tk.RIGHT)
+btn_open.pack(padx=4,pady=10,side=tk.RIGHT)
+label_musica.pack(padx=4,pady=10,side=tk.RIGHT)
 
 imagen_perfil = leer_imagen("./imagenes/profile.png",(100,100))
 label_perfil = tk.Label(menu_lateral, bg=COLOR_MENU_LATERAL
@@ -173,7 +194,8 @@ btn_inicio.pack(side = tk.TOP)
 btn_ventas = tk.Button(
     menu_lateral, text = "\uf4c0 Ventas",
     bg = COLOR_MENU_LATERAL, fg = "#f2f2f2",
-    bd = 0, width = 12, font = fontawesome
+    bd = 0, width = 12, font = fontawesome, anchor="w",
+    command=mostrar_ventas
     )
 
 btn_ventas.pack(side = tk.TOP)
@@ -181,7 +203,8 @@ btn_ventas.pack(side = tk.TOP)
 btn_productos = tk.Button(
     menu_lateral, text = "\uf468 Productos",
     bg = COLOR_MENU_LATERAL, fg = "#f2f2f2",
-    bd = 0, width = 12, font = fontawesome
+    bd = 0, width = 12, font = fontawesome, anchor="w",
+    command=mostrar_productos
     )
 
 btn_productos.pack(side = tk.TOP)
@@ -189,7 +212,8 @@ btn_productos.pack(side = tk.TOP)
 btn_reportes = tk.Button(
     menu_lateral, text = "\uf201 Reportes",
     bg = COLOR_MENU_LATERAL, fg = "#f2f2f2",
-    bd = 0, width = 12, font = fontawesome
+    bd = 0, width = 12, font = fontawesome, anchor="w",
+    command=mostrar_reportes
     )
 
 btn_reportes.pack(side = tk.TOP)
@@ -197,7 +221,8 @@ btn_reportes.pack(side = tk.TOP)
 btn_usuarios = tk.Button(
     menu_lateral, text = "\uf007 Usuarios",
     bg = COLOR_MENU_LATERAL, fg = "#f2f2f2",
-    bd = 0, width = 12, font = fontawesome
+    bd = 0, width = 12, font = fontawesome, anchor="w",
+    command=mostrar_ususarios
     )
 
 btn_usuarios.pack(side = tk.TOP)
@@ -205,7 +230,7 @@ btn_usuarios.pack(side = tk.TOP)
 btn_salir = tk.Button(
     menu_lateral, text = "\uf2f5 Salir",
     bg = COLOR_MENU_LATERAL, fg = "#f2f2f2",
-    bd = 0, width = 12, font = fontawesome
+    bd = 0, width = 12, font = fontawesome, anchor="w"
     )
 
 btn_salir.pack(side = tk.BOTTOM)
