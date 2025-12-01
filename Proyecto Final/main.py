@@ -7,7 +7,7 @@ from util import (
     guardar_datos,
     agregar_juego,
     eliminar_juego,
-    OPCIONES_MENU 
+    OPCIONES_MENU
 )
 
 # Importamos todas las funciones de graficos y reportes
