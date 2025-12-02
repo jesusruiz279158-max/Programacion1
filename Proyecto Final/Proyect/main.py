@@ -87,7 +87,7 @@ def main():
         print(Fore.YELLOW + "Intentando salir del programa..." + Style.RESET_ALL)
 
         if messagebox.askyesno("Salir", "¿Desea guardar los cambios antes de salir?"):
-            try:
+            try:    
                 guardar_catalogo(catalogo)
                 print(Fore.BLUE + "Cambios guardados antes de salir." + Style.RESET_ALL)
             except Exception:
@@ -100,7 +100,7 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
+
 """
 “if __name__ == "__main__": es una condición especial que Python
 usa para identificar si un archivo se está ejecutando por sí mismo. Si es así, se ejecuta main(). 
