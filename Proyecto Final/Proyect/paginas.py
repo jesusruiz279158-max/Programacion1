@@ -13,19 +13,29 @@ def pagina_inicio(panel, catalogo):
     frame = tk.Frame(panel, bg="white")
     frame.pack(fill="both", expand=True)
 
-    titulo = tk.Label(frame, text="Proyecto de Catálogo de Videojuegos",
+    titulo = tk.Label(frame, text="Programa de Inventario de Videojuegos",
                       font=("Segoe UI", 22), bg="white")
     titulo.pack(pady=20)
 
     texto = tk.Label(
         frame,
         text=(
-            "- Gestión de inventario\n"
+            "  Inventario de VideoJuegos\n"
+
+            "\n- Gestión de inventario\n"
             "- Agregar videojuegos\n"
             "- Modificar videojuegos\n"
             "- Buscar por nombre o categoría\n"
             "- Visualizar gráfica de inventario\n"
-            "- Guardar cambios en archivo"
+            "- Guardar cambios en archivo\n"
+
+            "\n  Desarrolladores\n"
+            "\n"
+            "Jesus Abraham Ruiz Sarmiento - 279158\n"
+            "Jose Arturo Romero Romero - 244315\n"
+            "Luis Alejandro Verdugo - 281122\n"
+            "Alexis Vicente Reyna Mejia - 281429\n"
+            "Jesus Gonzalez Acosta - 278080\n"
         ),
         font=("Segoe UI", 14),
         bg="white"
